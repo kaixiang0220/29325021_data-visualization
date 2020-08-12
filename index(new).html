@@ -1,0 +1,416 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Data Visualization_29325021</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		.axis text {
+			font-weight: bold;
+		}
+
+		.y-axis text {
+			text-anchor: end;
+		}
+
+		.axis path {
+			display: none;
+		}
+
+		.axis line {
+			stroke-opacity: 0.3;
+		}
+
+		.line {
+			fill: none;
+			stroke: steelblue;
+			stroke-width: 1.5px;
+		}
+
+		.legend-item {
+			/* cursor: pointer; */
+			float: left;
+			width: 150px;
+		}
+
+		.legend-item:hover {
+			text-decoration: underline;
+		}
+
+		.extra-options-container {
+			font-size: 12px;
+			margin-top: 15px;
+			display: flex;
+			width: 100px;
+			margin-left: 57px;
+			justify-content: space-between;
+		}
+
+		.extra-options-container1 {
+			font-size: 12px;
+			margin-top: 60px;
+			display: flex;
+			width: 100px;
+			margin-left: 57px;
+			justify-content: space-between;
+		}
+
+		.hide-all-option,
+		.show-all-option {
+			text-decoration: underline;
+			cursor: pointer;
+		}
+
+		.hide-all-option:hover,
+		.show-all-option:hover {
+			text-decoration: none;
+		}
+
+		.voronoi path {
+			fill: none;
+			pointer-events: all;
+		}
+
+		.voronoi-show path {
+			stroke: red;
+			stroke-opacity: 0.2;
+		}
+
+		.actions {
+			display: flex;
+			width: 732px;
+			justify-content: space-between;
+		}
+
+		.actions {
+			display: flex;
+			width: 681px;
+			padding-left: 49px;
+			justify-content: space-between;
+		}
+
+		.root {
+			width: 100%;
+			/* float: left; */
+		}
+
+		.gdp {
+			width: 70%;
+			height: 450px;
+			float: left;
+		}
+
+		.ec {
+			margin-top: 20px;
+			width: 70%;
+			height: 450px;
+			float: left;
+		}
+
+		.legend {
+			width: 30%;
+			height: 800px;
+			float: right;
+		}
+
+		h2 {
+			color: #141414;
+			line-height: 1.2;
+			font-size: 2rem;
+			font-family: Georgia, serif;
+		}
+
+		#line_group_legend {
+			float: right;
+			display: none;
+		}
+
+		#gdp_legend {
+			color: #003366;
+		}
+
+		#ec_legend {
+			color: #4cabce;
+		}
+
+		button {
+			display: block;
+			widows: 100px;
+			height: 30px;
+			float: left;
+			font-size: 17px;
+			margin: 2px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="cd-articles">
+
+		<article>
+			<h1>The relationship between GDP and Energy consumption</h1>
+			<header style="padding-top: 30px">
+				<h1>Introduction</h1>
+			</header>
+
+			<p>
+				This project aims to explore the relationship between GDP and energy consumption from multiple
+				perspective. I select 30 typical countries from different development levels around the world such as
+				the developed level, the developing level and even those in the war. From previous statistics
+				calculation, I verify my assumption that GDP and energy consumption has a positive relationship. Thus,
+				based on this rule, can you find something different such as those countries which is not corresponded
+				with this trend and those years when part of GDP data got disappear? <br>
+				If you find something different, you could check the findings with me: <br>
+				<br>
+				Here are my conclusions:
+			</p>
+
+			<p>
+				<button id="conclusion_show">show</button>
+				<button id="conclusion_hide" style="display: none">hide</button>
+				<br><br>
+			</p>
+
+			<div id="conclusion" style="display: none">
+
+				<h2>Missing value</h2>
+
+				<p>
+					● From 1991 to 2011, the gulf war and the Iraq war broke out successively in Iraq. Due to the war,
+					the GDP
+					statistics may be interrupted, so the data on this aspect is not available.<br>
+					● The Russian Federation was established in 1990 so that there was not any data available before
+					1990.
+				</p>
+
+				<h2>Irregular counties</h2>
+
+				<p>
+					● The energy consumption per capita of US is similar to that of Trinidad and Tobago, but whom GDP
+					per
+					capita is three times higher than that of Trinidad and Tobago, while Iceland with a similar GDP per
+					capita of the US, has much more energy consumption.<br>
+					● Japan, where the energy consumption per capita is only 40% of Kuwait's, has yet higher GDP than
+					Kuwait's.
+				</p>
+
+				<h2>Irregular time period</h2>
+
+				<p>
+					● In 1980, because of oil price control the organization of the petroleum exporting countries
+					(OPEC),
+					the second oil crisis broke out. As a result, GDP per capita in Kuwait, Qatar and other
+					oil-producing
+					countries exploded during this period.<br>
+					● In 1995, the world trade organization (WTO) was formally established. Affected by economic
+					globalization, the global trade of each country began to increase GDP per capita markedly.<br>
+					● In 1998, affected by the Asian financial crisis, the GDP per capita of the countries in the
+					Asia-pacific dropped significantly. Due to the impact of economic globalization, some European and
+					American countries
+					were also affected by the Asian financial crisis.<br>
+					● In 2009, the GDP of most countries in the world affected by the global economic crisis, dropping
+					sharply.
+				</p>
+			</div>
+			<br>
+
+			<h2>The source of my data set comes from:</h2>
+
+			<p>
+				A) Tabular data: 268 rows x 62columns, <a
+					href="https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?view=chart">https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?view=chart</a><br>
+				B) Tabular data: 268 rows x 62columns <a
+					href="https://data.worldbank.org.cn/indicator/EG.USE.PCAP.KG.OE?view=chart">https://data.worldbank.org.cn/indicator/EG.USE.PCAP.KG.OE?view=chart</a>
+				<br>
+				It is a tabular data set which has different attributes and textual attributes.
+			</p>
+
+		</article>
+
+		<article>
+			<header>
+				<h1>Map chart</h1>
+			</header>
+
+			<div style="margin-bottom: 10px;width: 100%;height: 500px;">
+				<div id="gdp_map" style="width: 49.5%;height: 500px;float: left;"></div>
+				<div id="ec_map" style="width: 49.5%;height: 500px;float: right;"></div>
+			</div>
+
+			<p>
+				From the geographical perspective, countries with higher GDP (per capita) are concentrated in
+				North
+				America, Europe and Oceania. Latin America, Africa and Asia have lower GDP (per capita). <br>
+				Countries with high energy consumption(per capita) are distributed in North America, Western
+				Europe and
+				northern
+				Europe, while GDP(per capita) in Africa, Latin America and the eastern half of Eurasia is low.
+				This is
+				roughly in line with the distribution of GDP per capita.
+			</p>
+		</article>
+
+		<article>
+			<header>
+				<h1>Line chart</h1>
+			</header>
+
+
+			<div class="root" style="height: 920px">
+
+				<div class="legend">
+				</div>
+
+				<div class="gdp">
+					<h2>GDP(per capita)</h2>
+				</div>
+
+				<div class="ec">
+					<h2>Energy consumption(per capita)</h2>
+				</div>
+			</div>
+
+			<p>
+				As we can see, energy consumption (per capita) in Qatar has been increasing from the late 1970s and
+				remains at a high level. <br>
+				Luxembourg's energy consumption tends to remain high but fluctuates downward,
+				but its GDP (per capita) keeps growing and ranks first in the past decade.
+				Iceland, Tobago and Kuwait
+				saw their energy consumption head rise and fall in line with the tendency of GDP.
+			</p>
+
+		</article>
+
+		<article>
+			<header>
+				<h1>Faceting graph</h1>
+			</header>
+			
+			<!-- line group -->
+			<div style="margin: 20px">
+				<button id="lineg_gdpb">GDP</button>
+				<button id="lineg_ecb">EC</button>
+				<button id="lineg_allb">ALL</button>
+				<div id="line_group_legend">
+					<span id="gdp_legend">— GDP</span>
+					<span id="ec_legend">— Energy consumption</span>
+				</div>
+				<div id="line_group" style="width: 100%;height: 700px;"></div>
+			</div>
+
+			<p>
+				As we can observe, China, Congo, Nepal, Zimbabwe, Ethiopia and India have low GDP and low energy
+				consumption. <br>
+				Among them, Congo, Nepal, Zimbabwe and Ethiopia have lower GDP
+				( per capita ) because of lower overall economic performance. <br>
+				The economic growth of these countries
+				still mainly depend on exports of resource or agricultural products. Energy-intensive industries are
+				rare in these countries, so they has low energy consumption.
+			</p>
+
+			<h1>Bar chart</h1>
+			<h2>Try to select data you oberseving above and find further regulation out!</h2>
+			<br>
+			<!-- bar -->
+			<p>
+				<button id="bar_gdpb">GDP</button>
+				<button id="bar_ecb">EC</button>
+				<button id="bar_allb">ALL</button>
+			</p>
+			<div style="margin-top: 20px">
+				<div id="bar" style="width: 100%;height: 700px;"></div>
+			</div>
+		</article>
+
+
+
+		<aside class="cd-read-more">
+			<ul>
+
+				<li>
+					<a href="/">
+						<em>intro</em>
+						<svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
+							<circle fill="none" stroke-width="2" cx="18" cy="18" r="16" stroke-dasharray="100 100"
+								stroke-dashoffset="100" transform="rotate(-90 18 18)"></circle>
+						</svg>
+					</a>
+				</li>
+
+				<li>
+					<a href="/">
+						<em>map</em>
+						<svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
+							<circle fill="none" stroke-width="2" cx="18" cy="18" r="16" stroke-dasharray="100 100"
+								stroke-dashoffset="100" transform="rotate(-90 18 18)"></circle>
+						</svg>
+					</a>
+				</li>
+
+				<li>
+					<a href="/">
+						<em>line</em>
+						<svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
+							<circle fill="none" stroke-width="2" cx="18" cy="18" r="16" stroke-dasharray="100 100"
+								stroke-dashoffset="100" transform="rotate(-90 18 18)"></circle>
+						</svg>
+					</a>
+				</li>
+
+				<li>
+					<a href="/">
+						<em>faceting&bar</em>
+						<svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
+							<circle fill="none" stroke-width="2" cx="18" cy="18" r="16" stroke-dasharray="100 100"
+								stroke-dashoffset="100" transform="rotate(-90 18 18)"></circle>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</aside>
+	</div>
+
+	<footer class="cd-footer">
+		<p>Created by Jiaqi Zhou</p>
+	</footer>
+
+	<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src="js/main.js"></script>
+	<script src="./js/echarts.js"></script>
+	<script src="./js/echarts-gl.min.js"></script>
+	<script src="./js/world.js"></script>
+	<script src="./js/d3.v5.min.js"></script>
+	<script src="./js/map.js"></script>
+	<script src="./js/line.js"></script>
+	<script src="./js/faceting.js"></script>
+	
+	<script>
+		const gdp_map = echarts.init(document.getElementById('gdp_map')),
+			ec_map = echarts.init(document.getElementById('ec_map'));
+
+		// year
+		const year = ['1971', '1972', '1973', '1974', '1975', '1976', '1977', '1978', '1979',
+			'1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987', '1988', '1989',
+			'1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999',
+			'2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009',
+			'2010', '2011', '2012', '2013', '2014'
+		];
+		$('#conclusion_show').click(function () {
+			$('#conclusion').show();
+			$('#conclusion_show').hide();
+			$('#conclusion_hide').show();
+		});
+		$('#conclusion_hide').click(function () {
+			$('#conclusion').hide();
+			$('#conclusion_show').show();
+			$('#conclusion_hide').hide();
+		});
+	</script>
+</body>
+
+</html>
